@@ -30,7 +30,7 @@ if contains(state, 'start');
     % writes telling pump to start
     writeline(s_connect, append(num2str(address), 'RUN'));
     pause(0.5)
-    message = (append('Pump ', num2str(address), 'started'));
+    message = (append('Pump ', num2str(address), ' ', 'started'));
     disp(message);
     % clears pump memory
     flush(s_connect)
@@ -38,7 +38,7 @@ if contains(state, 'start');
 elseif contains(state,'stop');
     writeline(s_connect, append(num2str(address), 'STP'));
     pause(0.5)
-    message = (append('Pump ', num2str(address), 'stopped'));
+    message = (append('Pump ', num2str(address), ' ', 'stopped'));
     disp(message);
     % clears pump memory
     flush(s_connect)

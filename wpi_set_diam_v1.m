@@ -47,7 +47,7 @@ if text_test==1;
 
     % writes out for the read function
     if bytes_avail == 0;
-        message=('No bytes available, please check the pump address or connection')
+        message=('No bytes available, please check the pump address or connection');
         disp(message)
     else str2num(resp(:, 5:9)) == value;
         message=(append('Syring diameter set to: ', resp(:,5:9), ' mm'));

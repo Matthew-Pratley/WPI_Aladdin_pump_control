@@ -58,7 +58,7 @@ end
 %  undertakes check of response from pump
 
 if bytes_avail == 7;
-    message = (append('Connected to pump at address: ', resp(:, 2:3))')
+    message = append('Connected to pump at address: ', resp(:, 2:3));
     disp(message);
 end
 

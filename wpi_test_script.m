@@ -6,7 +6,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %% connect to pump with no address 
-port = 'COM3';
+port = 'COM6';
 
 pump = wpi_connection_v1(port);
 
