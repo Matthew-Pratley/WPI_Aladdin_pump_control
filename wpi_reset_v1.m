@@ -1,4 +1,4 @@
-function [s_connect] = wpi_reset_v1(s_connect, address)
+function [message] = wpi_reset_v1(s_connect, address)
 % function for changing settings on a WPI Aladdin Syringe Pump
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -40,7 +40,9 @@ end
 
 % output statements
 if str2num(resp(2:3)) == 0;
-    disp('Reset completed')
+    message = ('Pump reset complete.');
+    disp(message);
 else
-    disp('Error in reset please check pump connection or address');
+    message = ('Error in reset please check pump connection or address'); 
+    disp(message);
 end

@@ -1,4 +1,4 @@
-function [s_connect] = wpi_set_volume_v1(s_connect, value, address)
+function [message] = wpi_set_volume_v1(s_connect, value, address)
 % function for changing settings on a WPI Aladdin Syringe Pump
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -60,9 +60,11 @@ if text_test==1;
 
     % creates output statement for the command line depending on the outcomes above 
     if bytes_avail == 0;
-        disp('No bytes available, please check the pump address or connection')
+        message =('No bytes available, please check the pump address or connection');
+        disp(message)
     elseif str2num(resp(:, 5:9)) == value;
-       disp(append('Volume set to: ', resp(:,5:9), volume_unit));
+        message =(append('Volume set to: ', resp(:,5:9), volume_unit));
+       disp(message);
     end
 
 elseif text_test ==0;    
@@ -79,10 +81,12 @@ set_diam = str2num(resp(5:9));
 % sets volume unit based off of pump diameter settings extracted from above
 if set_diam <= 14;
     volume_unit = 'uL';
-    disp(append('Volume unit set to ', volume_unit, ', to change please set pump diameter to greater than 14 mm for mL'));
+    message= (append('Volume unit set to ', volume_unit, ', to change please set pump diameter to greater than 14 mm for mL'));
+    disp(message);
 else 
     volume_unit = 'mL';
-        disp(append('Volume unit set to ', volume_unit, ', to change please set pump parameter to less than 14 mm for uL'));
+    message = (append('Volume unit set to ', volume_unit, ', to change please set pump parameter to less than 14 mm for uL'));
+    disp(message);
 end
 
 % sets a rule for the maximum available volume for the two syringes the maximum is 2 x 60 mL syringes giving 120 mL in total
@@ -115,11 +119,14 @@ else
 
     % creates output statement for the command line depending on the outcomes above 
     if bytes_avail == 0;
-        disp('No bytes available, please check the pump address or connection')
+        message = ('No bytes available, please check the pump address or connection') 
+        disp(message)
     elseif str2num(resp(:, 5:9)) == value;
-       disp(append('Volume set to: ', resp(:,5:9), volume_unit));
+        message = (append('Volume set to: ', resp(:,5:9), volume_unit));
+       disp(message);
     else
-        disp(append('Error volume not set, current set volume is ', resp(5:9), volume_unit));
+        message = (append('Error volume not set, current set volume is ', resp(5:9), volume_unit));
+        disp(message);
     end
 end
 end

@@ -1,4 +1,4 @@
-function [s_connect] = wpi_set_rate_v1(s_connect, value, set_unit, address)
+function [message] = wpi_set_rate_v1(s_connect, value, set_unit, address)
 % function for changing settings on a WPI Aladdin Syringe Pump
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -53,7 +53,8 @@ if text_test==1;
     end
 
     if bytes_avail ==0;
-    disp('No data read, please check the pump connection or address');
+        message = ('No data read, please check the pump connection or address');
+        disp(message);
     else 
         if contains(resp(10:11), 'MM')
             text_unit = 'mL per min';
@@ -65,8 +66,9 @@ if text_test==1;
             text_unit = 'uL per hour';
         end
     
-    % writes the current setting that the  
-    disp(append('Current flow rate set to ', resp(5:9), ' ', text_unit));
+    % writes the current setting that the
+    message = (append('Current flow rate set to ', resp(5:9), ' ', text_unit));
+    disp(message);
     end
 
 elseif text_test ==0; 
@@ -107,10 +109,12 @@ elseif text_test ==0;
     % sets volume unit based off of pump diameter settings extracted from above
     if set_diam <= 14;
         set_unit = 'uLm';
-        disp(append('Input rate unit set to ', set_unit, ', to change please set pump diameter to greater than 14 mm for mL.', newline, 'Alternatively, add a unit value into input position 3.'));
+        message = (append('Input rate unit set to ', set_unit, ', to change please set pump diameter to greater than 14 mm for mL.', newline, 'Alternatively, add a unit value into input position 3.'));
+        disp(message);
     else 
         set_unit = 'mLm';
-        disp(append('Input Rate unit set to ', set_unit, ', to change please set pump parameter to less than 14 mm for uL.', newline, 'Alternatively, add a unit value into input position 3.'));
+        message =(append('Input Rate unit set to ', set_unit, ', to change please set pump parameter to less than 14 mm for uL.', newline, 'Alternatively, add a unit value into input position 3.'));
+        disp(message);
     end
 end 
 
@@ -132,7 +136,8 @@ catch
 end
 
 if bytes_avail ==0;
-    disp('No data read, please check the pump connection or address');
+    message = ('No data read, please check the pump connection or address');
+    disp(message);
 else 
     if contains(resp(10:11), 'MM')
         text_unit = 'ML per min';
@@ -144,8 +149,9 @@ else
         text_unit = 'uL per hour';
     end
     
-    % writes the current setting that the  
-    disp(append('Current flow rate set to ', resp(5:9), ' ', text_unit));
+    % writes the current setting that the
+    message =(append('Current flow rate set to ', resp(5:9), ' ', text_unit));
+    disp(message);
 end
 
 % translates unit into write unit which is input for the pump
@@ -199,12 +205,15 @@ end
 
     if set_unit == read_unit; 
         if value == str2num(resp(5:9));
-            disp(append('New flow rate set to ' , resp(5:9), ' ', num2str(text_unit)'.'));
+            message = (append('New flow rate set to ' , resp(5:9), ' ', num2str(text_unit)'.'));
+            disp(message)
         else
-            disp(append('Error setting flow rate, but unit correct please check input value.'))
+            message = (append('Error setting flow rate, but unit correct please check input value.'));
+            disp(message)
         end
     else
-        disp(append('Error setting unit please check input.'))
+        message = ('Error setting unit please check input.');
+        disp(message)
 end
 end
 end

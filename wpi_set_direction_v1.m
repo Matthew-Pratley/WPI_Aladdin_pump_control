@@ -1,4 +1,4 @@
-function [s_connect] = wpi_set_direction_v1(s_connect, state, address)
+function [message] = wpi_set_direction_v1(s_connect, state, address)
 % function for changing the pumping direction on a WPI Aladdin 4000 Syringe Pump
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -45,16 +45,20 @@ if contains(state, 'read');
 
     % catches incorrect address or pump error
     if bytes_avail ==0; 
-        disp('No readable data, please check the pump address or the connection');
+        message=(append('Error syringe diameter not set, current diameter is ', resp(5:9), ' mm'));
+        disp(message);
     end
 
     % ouputs current state of pump
     if contains(resp(5:7), 'INF')
-        disp(append('Pump is currently set to infuse.'))
+        message=('Pump is currently set to infuse.');
+        disp(message);
     elseif contains(resp(5:7), 'WDR')
-        disp(append('Pump is currently set to withdraw.'));
+        message=('Pump is currently set to withdraw.');
+        disp(message);
     else
-        disp(append('Error in getting information please check pump connection or address'))
+        message=('Error in getting information please check pump connection or address');
+        disp(message)
     end
 
 % sets pump to infuse mode
@@ -76,9 +80,11 @@ elseif contains(state, 'infuse');
 
     % catches incorrect address or pump error
     if bytes_avail ==0; 
-        disp('No readable data, please check the pump address or the connection');
+        message=('No readable data, please check the pump address or the connection');
+        disp(message);
     else
-        disp('Pump direction set to infuse');
+        message =('Pump direction set to infuse');
+        disp(message);
     end
 
 % sets pump to withdraw mode
@@ -100,14 +106,17 @@ elseif contains(state, 'withdraw');
 
     % catches incorrect address or pump error
     if bytes_avail ==0; 
-        disp('No readable data, please check the pump address or the connection');
+        message= ('No readable data, please check the pump address or the connection');
+        disp(message);
     else
-        disp('Pump direction set to withdraw');
+        message =('Pump direction set to withdraw');
+        disp(message);
     end
 
 % catches invalid inputs    
 else
-    disp('Invalid input please change to either "read", "infuse" or "withdraw"');
+    message=('Invalid input please change to either "read", "infuse" or "withdraw"');
+    disp(message);
 end
 
 end

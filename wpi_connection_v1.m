@@ -1,4 +1,4 @@
-function [s_connect] = wpi_connection_v1(port, address);
+function [s_connect, message] = wpi_connection_v1(port, address);
 % function for connecting to a WPI Aladdin Syringe Pump
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -51,13 +51,15 @@ try
 % reads the response from the pump
 resp = read(s_connect, bytes_avail, 'char');
 catch
-    disp('Error response from pump not received, please check the connection.')
+    message=('Error response from pump not received, please check the connection.');
+    disp(message);
 end
 
 %  undertakes check of response from pump
 
 if bytes_avail == 7;
-    disp(append('Connected to pump at address: ', resp(:, 2:3)));
+    message = (append('Connected to pump at address: ', resp(:, 2:3))')
+    disp(message);
 end
 
 end

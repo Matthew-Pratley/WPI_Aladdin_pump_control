@@ -1,4 +1,4 @@
-function [s_connect] = wpi_start_stop_v1(s_connect, state, address)
+function [message] = wpi_start_stop_v1(s_connect, state, address)
 % function for changing settings on a WPI Aladdin Syringe Pump
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -30,18 +30,21 @@ if contains(state, 'start');
     % writes telling pump to start
     writeline(s_connect, append(num2str(address), 'RUN'));
     pause(0.5)
-    disp(append('Pump ', num2str(address), 'started'))
+    message = (append('Pump ', num2str(address), 'started'));
+    disp(message);
     % clears pump memory
     flush(s_connect)
 
 elseif contains(state,'stop');
     writeline(s_connect, append(num2str(address), 'STP'));
     pause(0.5)
-    disp(append('Pump ', num2str(address), 'stopped'));
+    message = (append('Pump ', num2str(address), 'stopped'));
+    disp(message);
     % clears pump memory
     flush(s_connect)
 else
-    disp('Invalid input please change to either "start", or "stop"');
+    message =('Invalid input please change to either "start", or "stop"');
+    disp(message);
 
 end
 end

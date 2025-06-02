@@ -47,16 +47,19 @@ if text_test==1;
 
     % writes out for the read function
     if bytes_avail == 0;
-        disp('No bytes available, please check the pump address or connection')
+        message=('No bytes available, please check the pump address or connection')
+        disp(message)
     else str2num(resp(:, 5:9)) == value;
-       disp(append('Syring diameter set to: ', resp(:,5:9), ' mm'));
+        message=(append('Syring diameter set to: ', resp(:,5:9), ' mm'));
+       disp(message);
     end
 
 elseif text_test ==0
 
 % puts in a catch for the size of the syring used 
 if value > 30;
-    disp('Syringe diameter cannot be larger than 30 mm, please input valid value')
+    message=('Syringe diameter cannot be larger than 30 mm, please input valid value');
+    disp(message)
 else
     % clears pump memory
     flush(s_connect)
@@ -84,11 +87,14 @@ else
 
     % creates output statement for the command line depending on the outcomes above 
     if bytes_avail == 0;
-        disp('No bytes available, please check the pump address or connection')
+        message=('No bytes available, please check the pump address or connection');
+        disp(message);
     elseif str2num(resp(:, 5:9)) == value;
-       disp(append('Syring diameter set to: ', resp(:,5:9), ' mm'));
+        message=(append('Syring diameter set to: ', resp(:,5:9), ' mm'));
+       disp(message);
     else
-        disp(append('Error syringe diameter not set, current diameter is ', resp(5:9), ' mm'));
+        message=(append('Error syringe diameter not set, current diameter is ', resp(5:9), ' mm'));
+        disp(message);
     end
 end
 end

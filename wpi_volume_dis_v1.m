@@ -1,4 +1,4 @@
-function [s_connect] = wpi_volume_dis_v1(s_connect, state, address)
+function [message] = wpi_volume_dis_v1(s_connect, state, address)
 % function for changing settings on a WPI Aladdin Syringe Pump
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -44,9 +44,11 @@ if contains(state, 'read')
 
     % creates output statement for the command line depending on the outcomes above 
     if bytes_avail == 0;
-        disp('No bytes available, please check the pump address or connection')
+        message = ('No bytes available, please check the pump address or connection');
+        disp(message);
     else
-        disp(append('Volume infused: ', resp(6:10), ' ', resp(17:18), ',  Volume Withdrawn: ', resp(12:16), ' ', resp(17:18)));
+        message = (append('Volume infused: ', resp(6:10), ' ', resp(17:18), ',  Volume Withdrawn: ', resp(12:16), ' ', resp(17:18)));
+        disp(message);
     end
 
 elseif contains(state, 'clear');
@@ -71,13 +73,16 @@ elseif contains(state, 'clear');
 
     % creates output statement for the command line depending on the outcomes above 
     if bytes_avail == 0;
-        disp('No bytes available, please check the pump address or connection')
+        meassage = ('No bytes available, please check the pump address or connection');
+        disp(message)
     else
-        disp(append('Volume dispensed cleared.'));
+        message =(append('Volume dispensed cleared.'); 
+        disp(message);
     end
 
 else
-    disp('Invalid input, please either input "read" to read the volumes dispensed or "clear" to reset the volume dispsnsed to 0')
+    message = ('Invalid input, please either input "read" to read the volumes dispensed or "clear" to reset the volume dispsnsed to 0');
+    disp(message)
 end
 
 end

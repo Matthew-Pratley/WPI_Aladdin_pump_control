@@ -1,4 +1,4 @@
-function [s_connect] = wpi_set_address_v1(s_connect, curr_add, new_add);
+function [message] = wpi_set_address_v1(s_connect, curr_add, new_add);
 % function for changing the address of a WPI Aladdin Syringe Pump
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -22,7 +22,8 @@ function [s_connect] = wpi_set_address_v1(s_connect, curr_add, new_add);
 
 % ensures the addresses input are valid
 if new_add > 99 | curr_add > 99;
-    disp(append('Address greater than 99 impossible please input a new or current address lower than 99'));
+    message=(append('Address greater than 99 impossible please input a new or current address lower than 99'));
+    disp(message);
 else
 
     % reads current address of pump 
@@ -35,10 +36,12 @@ else
 
     % catches if the read was unsucessful
     if bytes_avail == 0;
-        disp('Wrong current address, please check the input value'); 
+        message=('Wrong current address, please check the input value');
+        disp(message); 
     else
         resp = read(s_connect, bytes_avail, "char");
-        disp(append('Current address is: ', resp(:, 2:3) ));
+        message=(append('Current address is: ', resp(:, 2:3)));
+        disp(message);
 
     % flushes the pump comport to allow for new write
     flush(s_connect)
@@ -56,9 +59,11 @@ else
     
     % output statements determined from the values above
     if str2num(resp(:, 2:3)) == new_add;
-        disp(append('Address set to: ', resp(:, 2:3) ));
+        message=(append('Address set to: ', resp(:, 2:3) ))
+        disp(message);
     else
-        disp(append('Error setting address current address is ', resp(:, 2:3) ));
+        message=(append('Error setting address current address is ', resp(:, 2:3) ));
+        disp(message);
     end
 end
 end
