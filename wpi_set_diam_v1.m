@@ -1,4 +1,4 @@
-function [s_connect] = wpi_set_diam_v1(s_connect, value, address)
+function [s_connect, message] = wpi_set_diam_v1(s_connect, value, address)
 % function for changing settings on a WPI Aladdin Syringe Pump
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -90,7 +90,7 @@ else
         message=('No bytes available, please check the pump address or connection');
         disp(message);
     elseif str2num(resp(:, 5:9)) == value;
-        message=(append('Syring diameter set to: ', resp(:,5:9), ' mm'));
+        message=(append('Syringe diameter set to: ', resp(:,5:9), ' mm'));
        disp(message);
     else
         message=(append('Error syringe diameter not set, current diameter is ', resp(5:9), ' mm'));

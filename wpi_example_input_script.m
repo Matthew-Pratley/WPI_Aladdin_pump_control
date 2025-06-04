@@ -1,3 +1,4 @@
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % This script gives example inputs of every function used to control the
 % WPI Aladdin pumps. 
@@ -32,7 +33,7 @@ wpi_set_address_v1(pump, 00, 00);
 
 wpi_set_diam_v1(pump, 10);
 
-%% change the diamter of a pump to 10 with address NN where NN is a number between 1-99 in this example address is set to '28'
+%% change the diameter of a pump to 10 with address NN where NN is a number between 1-99 in this example address is set to '28'
 
 wpi_set_diam_v1(pump, 10, 28);
 
@@ -40,7 +41,7 @@ wpi_set_diam_v1(pump, 10, 28);
 
 wpi_set_diam_v1(pump, 'read');
 
-%% read the diamter of a pump with address NN where NN is a number between 1-99 in this example address is set to '28'
+%% read the diameter of a pump with address NN where NN is a number between 1-99 in this example address is set to '28'
 
 wpi_set_diam_v1(pump, 'read', 28);
 

@@ -47,7 +47,12 @@ if contains(state, 'read')
         message = ('No bytes available, please check the pump address or connection');
         disp(message);
     else
-        message = (append('Volume infused: ', resp(6:10), ' ', resp(17:18), ',  Volume Withdrawn: ', resp(12:16), ' ', resp(17:18)));
+        if resp(17:18) == 'ML';
+            vol_unit = 'mL';
+        elseif resp(17:18) == 'UL';
+            vol_unit = 'uL';
+        end
+        message = (append('Volume infused: ', resp(6:10), ' ', vol_unit, ',  Volume Withdrawn: ', resp(12:16), ' ', vol_unit));
         disp(message);
     end
 
@@ -76,7 +81,7 @@ elseif contains(state, 'clear');
         meassage = ('No bytes available, please check the pump address or connection');
         disp(message)
     else
-        message =(append('Volume dispensed cleared.'); 
+        message =(append('Volume dispensed cleared.')); 
         disp(message);
     end
 

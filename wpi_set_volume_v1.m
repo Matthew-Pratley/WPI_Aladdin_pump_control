@@ -122,10 +122,10 @@ else
         message = ('No bytes available, please check the pump address or connection') 
         disp(message)
     elseif str2num(resp(:, 5:9)) == value;
-        message = (append('Volume set to: ', resp(:,5:9), volume_unit));
+        message = (append('Volume set to: ', resp(:,5:9), ' ', volume_unit));
        disp(message);
     else
-        message = (append('Error volume not set, current set volume is ', resp(5:9), volume_unit));
+        message = (append('Error volume not set, current set volume is ', resp(5:9), ' ', volume_unit));
         disp(message);
     end
 end
