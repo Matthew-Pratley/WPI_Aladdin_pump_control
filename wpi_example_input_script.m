@@ -122,7 +122,7 @@ wpi_set_direction_v1(pump, 'withdraw', 28);
 
 %% pump reset for pump with address 00 
 
-wpi_reset_v1(pump)
+wpi_reset_v1(pump);
 
 %% pump reset for pump with address NN where NN is a number between 1 and 99 in this example address is set to '28'
 
