@@ -141,14 +141,22 @@ wpi_set_rate_v1(pump, 2, 'mLm');
 
 %% changes and reads rate settings to 2 for pump with address NN where NN is a number between 1 and 99 in this example address is set to '28'
 
-% reads rate from pump 
+% reads rate from pump at address 28
 wpi_set_rate_v1(pump, 'read', '', 28);
 
-% sets pump with no address and no attached unit 
+% sets pump with address and no attached unit 
 wpi_set_rate_v1(pump, 2, '', 28);
 
 % sets pump with address and unit included
 wpi_set_rate_v1(pump, 2, 'mLm', 28);
+
+%% changes pump flow rate
+
+% Change flow rate for a pump currently running with address '00' to 4 mL min^-1
+wpi_volume_dis_v1(pump, 4);
+
+% Change flow rate for a pump currently running with address '28' to 4 mL min^-1
+wpi_volume_dis_v1(pump, 4, 28);
 
 
 

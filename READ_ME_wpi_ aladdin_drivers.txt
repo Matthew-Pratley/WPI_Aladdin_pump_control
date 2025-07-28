@@ -243,6 +243,24 @@ wpi_set_volume_v1(pump, 'clear');
 Clear volume dispensed with address '28'
 wpi_set_volume_v1(pump, 'clear', 28);
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+Change flow rate whilst pump is pumping:
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+Changes the flow rate of the pump whilst pumping
+
+Function: wpi_change_rate_v1.m
+Generic use:
+wpi_change_rate_v1(CONNECTED_PUMP, value, ADDRESS); 
+
+Examples:
+Change flow rate currently on pump whilst the pump is running with address '00' to 4 mL min^-1
+wpi_volume_dis_v1(pump, 4);
+
+Change flow rate currently on pump whilst the pump is running with address '28' to 4 mL min^-1
+wpi_volume_dis_v1(pump, 4, 28);
+
+
+
 
 
 
