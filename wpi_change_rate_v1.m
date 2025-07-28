@@ -1,4 +1,4 @@
-function [message, timeVar] = wpi_change_rate_v1(s_connect, value, address)
+function [message, flowRate, t_var] = wpi_change_rate_v1(s_connect, value, address)
 % function for changing the flow rate whilst pumping for a WPI Aladdin pump
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -23,7 +23,7 @@ function [message, timeVar] = wpi_change_rate_v1(s_connect, value, address)
 t_var = [];
 
 % if no address is given then automatically sets the address
-if nargin == 3;
+if nargin == 2;
      address = '00';
 end
 
@@ -32,26 +32,66 @@ flush(s_connect)
 pause(0.05)
 
 % stops pump to allow new rate to be set
-[t_message] = wpi_start_stop_v1(s_connect, 'stop', address)
-fprintf(t_message);
-t_var.TimeStop=(datetime('now'))
+writeline(s_connect, append(num2str(address), 'STP'));
+t_var.TimeStop=(datetime('now'));
+pause(0.05)
 
 % sets new rate for the pump - must be rounded to 3 dp this is built into
 % the function through round(value, 3)
-[message]=wpi_set_rate_v1(s_connect, round(value,3), 'mLm', address);
-fprintf(message);
-t_var.TimeSet=(datetime('now'))
+writeline(s_connect, append(num2str(address),'RAT', num2str(round(value,3)), 'MM'));
+t_var.TimeSet=(datetime('now'));
+pause(0.05)
 
 % restarts pump at new rate
-[t_message] =wpi_start_stop_v1(pump_1, 'start')
-fprintf(t_message);
-t_var.TimeStart=(datetime('now'))
+writeline(s_connect, append(num2str(address), 'RUN'));
+t_var.TimeStart=(datetime('now'));
+pause(0.05)
+
+% flushes pump before read
+flush(s_connect)
+pause(0.05)
 
 % reads new set rate from pump
-[t_message]=wpi_set_rate_v1(pump_1, 'read')
-fprintf(t_message);
+writeline(s_connect, append(num2str(address), 'RAT'));
 t_var.TimeRead=(datetime('now'));
+pause(0.05)
 
+% Extracts data from the new read of the syringe
+bytes_avail = s_connect.NumBytesAvailable;
+
+% response from pump
+try
+    resp = read(s_connect, bytes_avail, 'char');
+catch
+end
+
+% reads response
+if bytes_avail ==0;
+   message = ('No data read, please check the pump connection or address');
+   disp(message);
+else 
+    if contains(resp(10:11), 'MM')
+        text_unit = 'mL per min';
+    elseif contains(resp(10:11), 'UM')
+        text_unit = 'uL per min';
+    elseif contains(resp(10:11), 'MH')
+        text_unit = 'mL per hour';
+    elseif contains(resp(10:11), 'UH')
+        text_unit = 'uL per hour';
+    end
+end
+    
+% writes the current setting that the
+flowRate = str2num(resp(5:9)); 
+
+% tests for correct flow rate
+if flowRate == round(value,3);
+    message = append('Current flow rate set to ', num2str(flowRate), ' ', text_unit);
+else
+    message = append('Error setting flow rate, Target value: ', num2str(value), ' set value: ', num2str(flowRate), '.');
+end
+% displays message 
+% disp(message);
 end
 
 
